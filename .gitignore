@@ -1,0 +1,31 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# --- 実行時に生成されるユーザーデータ（公開しない） ---
+timer_settings.json
+timer_presets.json
+timer_stats.json
+
+# --- 開発・デバッグ用の作業ファイル ---
+*.ps
+arc_*.png
+ring_*.png
+timer_full.png
+timer_new*.png
+timer_test.png
+timer_preview.png
+_set.png
+_stats.png
+
+# --- エディタ / ツール ---
+.vscode/
+.claude/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
