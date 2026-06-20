@@ -1,33 +1,33 @@
 {
-  "total_sec": 1500,
+  "total_sec": 3660,
   "segments": [
     {
       "name": "区間 1",
-      "duration_seconds": 300,
+      "duration_seconds": 732,
       "color": "#3498DB",
       "memo": ""
     },
     {
       "name": "区間 2",
-      "duration_seconds": 300,
+      "duration_seconds": 732,
       "color": "#2ECC71",
       "memo": ""
     },
     {
       "name": "区間 3",
-      "duration_seconds": 300,
+      "duration_seconds": 732,
       "color": "#9B59B6",
       "memo": ""
     },
     {
       "name": "区間 4",
-      "duration_seconds": 300,
+      "duration_seconds": 732,
       "color": "#E67E22",
       "memo": ""
     },
     {
       "name": "区間 5",
-      "duration_seconds": 300,
+      "duration_seconds": 732,
       "color": "#E74C3C",
       "memo": ""
     }
