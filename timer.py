@@ -5,6 +5,7 @@ import copy
 import json
 import os
 import re
+import sys
 import math as _math
 import datetime as _dt
 import tkinter as tk
@@ -64,11 +65,21 @@ ALERT_SOUND = {
     "complete": [(1400, 80), (0, 50), (1400, 80), (0, 50), (1200, 600)],
 }
 
-# 設定ファイルはスクリプトと同じディレクトリ
-SETTINGS_PATH = Path(__file__).parent / "timer_settings.json"
-PRESETS_PATH  = Path(__file__).parent / "timer_presets.json"
-STATS_PATH    = Path(__file__).parent / "timer_stats.json"
-ICON_PATH     = Path(__file__).parent / "timer.ico"
+# --- 実行形態に応じた基準ディレクトリ ---
+# PyInstaller で .exe 化した場合:
+#   - 書き込むユーザーデータ(JSON)は exe と同じ場所（一時展開フォルダは毎回消えるため）
+#   - 同梱リソース(timer.ico)は展開先の sys._MEIPASS から読む
+if getattr(sys, "frozen", False):
+    DATA_DIR     = Path(sys.executable).parent                       # exe のある場所
+    RESOURCE_DIR = Path(getattr(sys, "_MEIPASS", DATA_DIR))          # 同梱リソース展開先
+else:
+    DATA_DIR     = Path(__file__).parent
+    RESOURCE_DIR = Path(__file__).parent
+
+SETTINGS_PATH = DATA_DIR / "timer_settings.json"
+PRESETS_PATH  = DATA_DIR / "timer_presets.json"
+STATS_PATH    = DATA_DIR / "timer_stats.json"
+ICON_PATH     = RESOURCE_DIR / "timer.ico"
 
 # キーボードショートカット一覧（? キーで表示）
 SHORTCUTS = [

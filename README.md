@@ -20,20 +20,37 @@ Python + customtkinter 製のデスクトップタイマーアプリです。時
 | 予約スタート | 指定時刻に自動で開始（アラーム的に使用可） |
 | 表示モード | コンパクト表示 / 円形表示 / 外観テーマ（自動・ライト・ダーク）の切替 |
 
-## インストール
+## 使い方（Python が無くてもOK）
+
+Python をインストールしていない人は、**単体実行ファイル（.exe）** をダウンロードして
+ダブルクリックするだけで使えます。
+
+1. リリースページ（または `dist` フォルダ）から `TimelineTimer.exe` をダウンロード
+2. 好きなフォルダに置いてダブルクリックで起動
+3. 設定・プリセット・実績は exe と同じフォルダに自動保存されます
+
+> ⚠️ 署名なしの実行ファイルのため、初回起動時に Windows SmartScreen の警告
+> （「WindowsによってPCが保護されました」）が出ることがあります。
+> 「詳細情報」→「実行」で起動できます。
+
+## 開発者向け：Python から実行する
 
 ```bash
 pip install -r requirements.txt
+python timer.py
 ```
 
 依存ライブラリ: `customtkinter`, `pystray`, `Pillow`
 （`winsound` は Windows 標準のため追加不要）
 
-## 実行
+## 開発者向け：.exe をビルドする
 
 ```bash
-python timer.py
+pip install pyinstaller
+build_exe.bat
 ```
+
+`dist\TimelineTimer.exe` が生成されます。
 
 ## キーボードショートカット
 

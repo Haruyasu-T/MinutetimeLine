@@ -6,6 +6,11 @@ __pycache__/
 venv/
 env/
 
+# --- PyInstaller ビルド成果物 ---
+build/
+dist/
+*.spec
+
 # --- 実行時に生成されるユーザーデータ（公開しない） ---
 timer_settings.json
 timer_presets.json
