@@ -1,0 +1,66 @@
+{
+  "total_sec": 1500,
+  "segments": [
+    {
+      "name": "区間 1",
+      "duration_seconds": 300,
+      "color": "#3498DB",
+      "memo": ""
+    },
+    {
+      "name": "区間 2",
+      "duration_seconds": 300,
+      "color": "#2ECC71",
+      "memo": ""
+    },
+    {
+      "name": "区間 3",
+      "duration_seconds": 300,
+      "color": "#9B59B6",
+      "memo": ""
+    },
+    {
+      "name": "区間 4",
+      "duration_seconds": 300,
+      "color": "#E67E22",
+      "memo": ""
+    },
+    {
+      "name": "区間 5",
+      "duration_seconds": 300,
+      "color": "#E74C3C",
+      "memo": ""
+    }
+  ],
+  "warn_thresholds": [
+    {
+      "enabled": true,
+      "seconds": 30,
+      "count": 2,
+      "color": "#ccaa00"
+    },
+    {
+      "enabled": true,
+      "seconds": 10,
+      "count": 4,
+      "color": "#dd6600"
+    }
+  ],
+  "language": "ja",
+  "sound": true,
+  "segment_alert": true,
+  "repeat": false,
+  "repeat_max": 0,
+  "loop_alarm": false,
+  "countup": false,
+  "tray": false,
+  "settings_open": false,
+  "custom_sound": "",
+  "next_preset": "",
+  "appearance": "自動",
+  "precision": "秒",
+  "style": "フラット",
+  "circle_num_mode": "%",
+  "disp_size": "大",
+  "compact": false
+}

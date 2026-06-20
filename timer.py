@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""タイムラインタイマー — 総分数:秒表示 + 区間管理"""
+"""MinutetimeLine — 総分数:秒表示のタイムラインタイマー（区間管理）"""
 
 import copy
 import json
@@ -80,6 +80,18 @@ SETTINGS_PATH = DATA_DIR / "timer_settings.json"
 PRESETS_PATH  = DATA_DIR / "timer_presets.json"
 STATS_PATH    = DATA_DIR / "timer_stats.json"
 ICON_PATH     = RESOURCE_DIR / "timer.ico"
+
+
+def read_source(data_path: Path) -> Optional[Path]:
+    """読み込み元のパスを返す。ユーザーデータ(data_path)が無ければ、
+    exe に同梱した既定ファイル(RESOURCE_DIR)へフォールバックする。
+    どちらも無ければ None。書き込みは常に data_path 側へ行う。"""
+    if data_path.exists():
+        return data_path
+    bundled = RESOURCE_DIR / data_path.name
+    if bundled != data_path and bundled.exists():
+        return bundled
+    return None
 
 # キーボードショートカット一覧（? キーで表示）
 SHORTCUTS = [
@@ -329,8 +341,9 @@ class TimerApp(ctk.CTk):
         # 言語は UI 構築前に反映する必要があるため、設定ファイルから先読みする
         self._lang = "ja"
         try:
-            if SETTINGS_PATH.exists():
-                _d = json.loads(SETTINGS_PATH.read_text(encoding="utf-8"))
+            _src = read_source(SETTINGS_PATH)
+            if _src:
+                _d = json.loads(_src.read_text(encoding="utf-8"))
                 self._lang = _d.get("language", "ja")
         except Exception:
             self._lang = "ja"
@@ -792,10 +805,11 @@ class TimerApp(ctk.CTk):
             self._flash_status(f"{t('保存失敗')}: {e}")
 
     def _load_settings(self, silent: bool = False):
-        if not SETTINGS_PATH.exists():
+        src = read_source(SETTINGS_PATH)
+        if src is None:
             return
         try:
-            data = json.loads(SETTINGS_PATH.read_text(encoding="utf-8"))
+            data = json.loads(src.read_text(encoding="utf-8"))
             self._total_sec = int(data.get("total_sec", 3600))
             self._total_var.set(dur_str(self._total_sec))
             self._segments = [
@@ -860,9 +874,10 @@ class TimerApp(ctk.CTk):
 
     def _load_presets(self):
         """timer_presets.json を読み込み、コンボボックスを更新する"""
-        if PRESETS_PATH.exists():
+        src = read_source(PRESETS_PATH)
+        if src is not None:
             try:
-                data = json.loads(PRESETS_PATH.read_text(encoding="utf-8"))
+                data = json.loads(src.read_text(encoding="utf-8"))
                 self._presets = data if isinstance(data, list) else []
             except Exception:
                 self._presets = []

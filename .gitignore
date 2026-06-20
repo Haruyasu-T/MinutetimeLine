@@ -12,9 +12,10 @@ dist/
 *.spec
 
 # --- 実行時に生成されるユーザーデータ（公開しない） ---
-timer_settings.json
-timer_presets.json
-timer_stats.json
+# ルート直下のみ無視（defaults/ 配下の同梱用既定ファイルは追跡する）
+/timer_settings.json
+/timer_presets.json
+/timer_stats.json
 
 # --- 開発・デバッグ用の作業ファイル ---
 *.ps

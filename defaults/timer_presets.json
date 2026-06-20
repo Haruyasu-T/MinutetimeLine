@@ -1,0 +1,81 @@
+[
+  {
+    "name": "初期",
+    "total_sec": 3660,
+    "segments": [
+      {
+        "name": "区間 1",
+        "duration_seconds": 732,
+        "color": "#3498DB"
+      },
+      {
+        "name": "区間 2",
+        "duration_seconds": 732,
+        "color": "#2ECC71"
+      },
+      {
+        "name": "区間 3",
+        "duration_seconds": 732,
+        "color": "#9B59B6"
+      },
+      {
+        "name": "区間 4",
+        "duration_seconds": 732,
+        "color": "#E67E22"
+      },
+      {
+        "name": "区間 5",
+        "duration_seconds": 732,
+        "color": "#E74C3C"
+      }
+    ],
+    "warn_thresholds": [
+      {
+        "enabled": true,
+        "seconds": 30,
+        "count": 2,
+        "color": "#ccaa00"
+      },
+      {
+        "enabled": true,
+        "seconds": 10,
+        "count": 4,
+        "color": "#dd6600"
+      }
+    ],
+    "sound": true,
+    "repeat": false
+  },
+  {
+    "name": "学習",
+    "total_sec": 1800,
+    "segments": [
+      {
+        "name": "作業",
+        "duration_seconds": 1500,
+        "color": "#3498DB"
+      },
+      {
+        "name": "休憩",
+        "duration_seconds": 300,
+        "color": "#2ECC71"
+      }
+    ],
+    "warn_thresholds": [
+      {
+        "enabled": true,
+        "seconds": 30,
+        "count": 2,
+        "color": "#ccaa00"
+      },
+      {
+        "enabled": true,
+        "seconds": 10,
+        "count": 4,
+        "color": "#dd6600"
+      }
+    ],
+    "sound": true,
+    "repeat": true
+  }
+]
