@@ -67,7 +67,3 @@ python timer.py
 - `timer_settings.json` — 現在の設定
 - `timer_presets.json` — 保存したプリセット
 - `timer_stats.json` — 実績ログ
-
-## ライセンス
-
-[MIT License](LICENSE)
