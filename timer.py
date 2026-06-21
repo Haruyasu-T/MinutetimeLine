@@ -301,6 +301,9 @@ class TimerApp(ctk.CTk):
                 self.iconbitmap(str(ICON_PATH))
             except Exception:
                 pass
+            # Windows ではタスクバー/Alt-Tab 用に高解像度アイコンを直接設定する。
+            # iconbitmap だけだと低解像度の画像が使われ、高DPIで荒く見えるため。
+            self.after(0, self._apply_hires_icon)
         self.protocol("WM_DELETE_WINDOW", self._on_close)
 
         self._segments: List[Segment] = []
@@ -983,6 +986,30 @@ class TimerApp(ctk.CTk):
         """phase_lbl に一時メッセージを表示"""
         self._phase_lbl.configure(text=msg, text_color="#5dade2")
         self.after(2000, lambda: self._refresh_display())
+
+    def _apply_hires_icon(self):
+        """Windows のタスクバー/Alt-Tab に高解像度アイコンを設定する。
+        Tkinter の iconbitmap は低解像度の画像を使うため、高DPIでは荒く見える。
+        WM_SETICON で .ico 内の 256px / 32px を直接渡してくっきり表示させる。"""
+        if sys.platform != "win32" or not ICON_PATH.exists():
+            return
+        try:
+            import ctypes
+            user32 = ctypes.windll.user32
+            hwnd = user32.GetParent(self.winfo_id())
+            LR_LOADFROMFILE = 0x00000010
+            IMAGE_ICON = 1
+            WM_SETICON = 0x0080
+            ICON_SMALL, ICON_BIG = 0, 1
+            p = str(ICON_PATH)
+            big = user32.LoadImageW(None, p, IMAGE_ICON, 256, 256, LR_LOADFROMFILE)
+            small = user32.LoadImageW(None, p, IMAGE_ICON, 32, 32, LR_LOADFROMFILE)
+            if big:
+                user32.SendMessageW(hwnd, WM_SETICON, ICON_BIG, big)
+            if small:
+                user32.SendMessageW(hwnd, WM_SETICON, ICON_SMALL, small)
+        except Exception:
+            pass
 
     def _on_close(self):
         # トレイに最小化が有効なら、閉じる代わりにトレイへ格納
