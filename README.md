@@ -2,6 +2,10 @@
 
 Python + customtkinter 製のデスクトップタイマーアプリです。時間を「総分数:秒」形式で表示し、複数の区間（セグメント）をタイムラインバーで視覚的に管理できます。日本語 / 英語に対応しています。
 
+**▶ [最新版（MinutetimeLine.exe）をダウンロード](https://github.com/Haruyasu-T/MinutetimeLine/releases/latest)** — Python のインストール不要、ダウンロードしてダブルクリックするだけ。
+
+![MinutetimeLine のスクリーンショット](docs/screenshot.png)
+
 ## 主な機能
 
 | 機能 | 説明 |
@@ -25,7 +29,7 @@ Python + customtkinter 製のデスクトップタイマーアプリです。時
 Python をインストールしていない人は、**単体実行ファイル（.exe）** をダウンロードして
 ダブルクリックするだけで使えます。
 
-1. リリースページ（または `dist` フォルダ）から `MinutetimeLine.exe` をダウンロード
+1. [リリースページ](https://github.com/Haruyasu-T/MinutetimeLine/releases/latest) から `MinutetimeLine.exe` をダウンロード
 2. 好きなフォルダに置いてダブルクリックで起動
 3. 設定・プリセット・実績は exe と同じフォルダに自動保存されます
 
