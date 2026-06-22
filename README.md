@@ -100,6 +100,17 @@ build_exe.bat
 - `timer_presets.json` — 保存したプリセット
 - `timer_stats.json` — 実績ログ
 
+## ライセンス
+
+本体は [Apache License 2.0](LICENSE) で配布しています。
+
+配布する exe には以下の第三者ライブラリが同梱されており、それぞれのライセンスに従います。
+詳細とライセンス全文は [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md)（および `licenses/` フォルダ）を参照してください。
+
+- customtkinter (MIT)
+- Pillow (HPND / MIT-CMU)
+- pystray (LGPL-3.0)
+
 ## 開発経緯
 
 勉強や試験対策の時間管理に一般的なタイマーを使っていると、時間を区切って配分したいときに分割がしにくく、時間配分を考えるたびに少し手間がかかっていました。「最初から区間に分けて、配分を視覚的に組み立てられるタイマーがあればいいのに」という思いから、このアプリの制作を始めました。
