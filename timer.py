@@ -93,6 +93,16 @@ def read_source(data_path: Path) -> Optional[Path]:
         return bundled
     return None
 
+
+_SAFE_COLOR_RE = re.compile(r"^#?[0-9A-Za-z]+$")
+
+
+def safe_color(c) -> bool:
+    """tk.eval に色を文字列展開する前の検証。16進(#RRGGBB)や名前付き色のみ許可し、
+    Tcl のメタ文字（空白・中括弧・角括弧・$・; 等）を含む値を弾く。
+    色は設定/プリセットの JSON から読み込まれるため、不正な値による Tcl 注入を防ぐ。"""
+    return isinstance(c, str) and bool(_SAFE_COLOR_RE.match(c))
+
 # キーボードショートカット一覧（? キーで表示）
 SHORTCUTS = [
     ("Space", "スタート / 一時停止"),
@@ -1370,9 +1380,9 @@ class TimerApp(ctk.CTk):
             cmds = []
             for cv, bg_orig, fill_orig in self._flash_canvases:
                 p = str(cv)
-                if bg_orig:
+                if safe_color(bg_orig):
                     cmds.append(f"catch {{{p} configure -background {bg_orig}}}")
-                if fill_orig:
+                if safe_color(fill_orig):
                     cmds.append(f"catch {{{p} itemconfigure inner_parts -fill {fill_orig}}}")
             try:
                 self.tk.eval("\n".join(cmds))
@@ -1421,17 +1431,18 @@ class TimerApp(ctk.CTk):
             cmds = []
             if step % 2 == 0:
                 # 点灯: 全キャンバスを flash 色に
-                for cv, _, _ in self._flash_canvases:
-                    p = str(cv)
-                    cmds.append(f"catch {{{p} configure -background {colors[0]}}}")
-                    cmds.append(f"catch {{{p} itemconfigure inner_parts -fill {colors[0]}}}")
+                if safe_color(colors[0]):
+                    for cv, _, _ in self._flash_canvases:
+                        p = str(cv)
+                        cmds.append(f"catch {{{p} configure -background {colors[0]}}}")
+                        cmds.append(f"catch {{{p} itemconfigure inner_parts -fill {colors[0]}}}")
             else:
                 # 消灯: 元の色に戻す
                 for cv, bg_orig, fill_orig in self._flash_canvases:
                     p = str(cv)
-                    if bg_orig:
+                    if safe_color(bg_orig):
                         cmds.append(f"catch {{{p} configure -background {bg_orig}}}")
-                    if fill_orig:
+                    if safe_color(fill_orig):
                         cmds.append(f"catch {{{p} itemconfigure inner_parts -fill {fill_orig}}}")
             if cmds:
                 try:
