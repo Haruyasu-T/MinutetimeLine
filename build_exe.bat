@@ -10,6 +10,7 @@ pyinstaller --noconfirm --onefile --windowed ^
   --add-data "timer.ico;." ^
   --add-data "defaults/timer_settings.json;." ^
   --add-data "defaults/timer_presets.json;." ^
+  --add-data "LICENSE;." ^
   --add-data "THIRD-PARTY-LICENSES.md;." ^
   --add-data "licenses;licenses" ^
   --collect-data customtkinter ^
