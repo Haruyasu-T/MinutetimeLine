@@ -144,7 +144,10 @@ TRANSLATIONS = {
         "コンパクト": "Compact", "経過時間": "Elapsed",
         "プリセット:": "Preset:", "読込": "Load", "保存": "Save", "削除": "Delete",
         "完了後に連結:": "Chain next:", "（なし）": "(none)",
-        "📊 実績": "📊 Stats", "⌨ ヘルプ": "⌨ Help",
+        "📊 実績": "📊 Stats", "⌨ ヘルプ": "⌨ Help", "📜 ライセンス": "📜 Licenses",
+        "ライセンス": "Licenses",
+        "本体 (Apache License 2.0)": "App (Apache License 2.0)",
+        "サードパーティ概要": "Third-party overview",
         "回(0=無限)": "× (0=∞)",
         "指定時刻に開始:": "Start at:", "予約": "Set", "予約解除": "Cancel",
         "🗕 閉じる時トレイへ": "🗕 Close to tray",
@@ -733,6 +736,9 @@ class TimerApp(ctk.CTk):
         ctk.CTkButton(misc_row, text=t("⌨ ヘルプ"), width=80, height=28,
                       fg_color="gray35", hover_color="gray25",
                       command=self._show_shortcuts).pack(side="left", padx=3)
+        ctk.CTkButton(misc_row, text=t("📜 ライセンス"), width=96, height=28,
+                      fg_color="gray35", hover_color="gray25",
+                      command=self._show_licenses).pack(side="left", padx=3)
 
         # 予約スタート（指定時刻）＋ トレイ最小化
         sched_row = ctk.CTkFrame(sf, fg_color="transparent")
@@ -2618,6 +2624,48 @@ class TimerApp(ctk.CTk):
             ctk.CTkLabel(body, text=t(desc), anchor="w",
                          font=ctk.CTkFont(size=13)).grid(
                 row=i, column=1, sticky="w", pady=4)
+        win.after(120, win.focus)
+
+    def _show_licenses(self):
+        """同梱ライセンス（本体 Apache 2.0＋使用ライブラリ）をアプリ内で表示する。
+        exe 単体でもらった人でもライセンスを確認できるよう、表示手段を設ける。
+        ファイルは exe に同梱され RESOURCE_DIR から読み込む。"""
+        docs = [
+            (t("本体 (Apache License 2.0)"), "LICENSE"),
+            (t("サードパーティ概要"),         "THIRD-PARTY-LICENSES.md"),
+            ("customtkinter (MIT)",           "licenses/customtkinter-LICENSE.txt"),
+            ("Pillow (HPND)",                 "licenses/Pillow-LICENSE.txt"),
+            ("pystray (LGPL-3.0)",            "licenses/pystray-LGPL-3.0.txt"),
+            ("pystray (GPL-3.0)",             "licenses/pystray-GPL-3.0.txt"),
+        ]
+        name_to_rel = {name: rel for name, rel in docs}
+        win = ctk.CTkToplevel(self)
+        win.title(t("ライセンス"))
+        win.geometry("680x600")
+        win.transient(self)
+        ctk.CTkLabel(win, text="MinutetimeLine — " + t("ライセンス"),
+                     font=ctk.CTkFont(size=16, weight="bold")).pack(pady=(14, 6))
+        sel = ctk.CTkComboBox(win, values=[d[0] for d in docs], width=320,
+                              state="readonly")
+        sel.pack(pady=(0, 8))
+        box = ctk.CTkTextbox(win, wrap="word",
+                             font=ctk.CTkFont(size=11, family="Consolas"))
+        box.pack(fill="both", expand=True, padx=14, pady=(0, 14))
+
+        def _load(choice):
+            rel = name_to_rel.get(choice, "")
+            try:
+                text = (RESOURCE_DIR / rel).read_text(encoding="utf-8")
+            except Exception as e:
+                text = f"({rel} を読み込めませんでした: {e})"
+            box.configure(state="normal")
+            box.delete("1.0", "end")
+            box.insert("1.0", text)
+            box.configure(state="disabled")
+
+        sel.configure(command=_load)
+        sel.set(docs[0][0])
+        _load(docs[0][0])
         win.after(120, win.focus)
 
     def _skip_segment(self, direction: int):
